@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks';
 import { useState, useEffect, ChangeEvent } from 'react';
-import { LoginPayload } from '@/models';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -12,7 +11,7 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorText, setErrorText] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -36,15 +35,22 @@ export default function AdminLoginPage() {
       return;
     }
     try {
-      setErrorText(false);
+      setErrorText('');
       setLoading(true);
       setEmptyUsername(false);
       setEmptyPassword(false);
       await login({ username, password, role: 'admin' });
-    } catch (error) {
-      setErrorText(true);
-      setLoading(false);
+    } catch (error: any) {
       console.log('failed to login', error);
+      const status = error.response?.status || 500;
+      if (status === 401) {
+        setErrorText('Tên đăng nhập hoặc mật khẩu không đúng');
+      } else if (status === 403) {
+        setErrorText('Truy cập bị từ chối');
+      } else {
+        setErrorText('Đã có lỗi gì đó xảy ra. Vui lòng thử lại');
+      }
+      setLoading(false);
     }
   }
 
@@ -55,7 +61,11 @@ export default function AdminLoginPage() {
   useEffect(() => {
     if (profile?.username) {
       setLoading(true);
-      router.push('/admin/dashboard');
+      if (profile?.email) {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/admin/dashboard?emailMissing=true');
+      }
     } else {
       setLoading(false);
     }
@@ -86,7 +96,7 @@ export default function AdminLoginPage() {
           ) : (
             <div className="flex flex-col items-center">
               <Input
-                className={emptyUsername ? 'border-danger' : 'border-shark-70' + ' mb-[30px]'}
+                className={(emptyUsername ? 'border-danger' : 'border-shark-70') + ' mb-[30px]'}
                 onChange={handleUsernameChange}
                 onBlur={() => setEmptyUsername(false)}
                 type="text"
@@ -94,7 +104,7 @@ export default function AdminLoginPage() {
                 placeholder="Tên đăng nhập"
               />
               <Input
-                className={emptyPassword ? 'border-danger' : 'border-shark-70' + ' mb-[30px]'}
+                className={(emptyPassword ? 'border-danger' : 'border-shark-70') + ' mb-[30px]'}
                 onChange={handlePaswordChange}
                 onBlur={() => setEmptyPassword(false)}
                 type={showPassword ? 'text' : 'password'}
@@ -110,11 +120,7 @@ export default function AdminLoginPage() {
                 Quên mật khẩu?
               </Link>
               <Button onClick={handleLoginClick} className="w-full" title="Xác nhận" />
-              {errorText && (
-                <p className="mt-4 text-[13px] text-danger">
-                  Tên đang nhập hoặc mật khẩu không đúng
-                </p>
-              )}
+              <p className="mt-4 text-[13px] text-danger">{errorText}</p>
             </div>
           )}
         </div>

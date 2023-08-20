@@ -1,5 +1,10 @@
 import { axiosClient } from '@/api-client';
-import { LoginPayload, forgotPasswordPayload, resetPasswordPayload } from '@/models';
+import {
+  LoginPayload,
+  ProfilePayload,
+  forgotPasswordPayload,
+  resetPasswordPayload,
+} from '@/models';
 
 export const authApi = {
   login(payload: LoginPayload) {
@@ -10,6 +15,9 @@ export const authApi = {
   },
   getProfile() {
     return axiosClient.get('/users/profile');
+  },
+  updateProfile(payload: ProfilePayload) {
+    return axiosClient.patch('/users', payload);
   },
   forgotPassword(payload: forgotPasswordPayload) {
     return axiosClient.post('/users/forgot-password', payload);

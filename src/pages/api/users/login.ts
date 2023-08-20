@@ -31,13 +31,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     isHandled = true;
 
     if (proxyRes.statusCode != 200) {
-      if (proxyRes.statusCode == 401) {
-        return (res as NextApiResponse).status(401).json({ message: 'Login account is incorrect' });
-      } else if (proxyRes.statusCode == 403) {
-        return (res as NextApiResponse).status(403).json({ message: 'Access Denied' });
-      } else if (proxyRes.statusCode == 500) {
-        return (res as NextApiResponse).status(500).json({ message: 'Something was wrong' });
-      }
+      return (res as NextApiResponse)
+        .status(proxyRes.statusCode || 500)
+        .json({ message: proxyRes.statusMessage });
     }
 
     let body = '';

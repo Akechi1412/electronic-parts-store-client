@@ -1,5 +1,5 @@
 import { authApi } from '@/api-client';
-import { LoginPayload } from '@/models';
+import { LoginPayload, ProfilePayload } from '@/models';
 import useSWR from 'swr';
 import { PublicConfiguration } from 'swr/_internal';
 
@@ -25,10 +25,23 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     mutate({}, false);
   }
 
+  async function updateProfile({
+    username,
+    fullname,
+    phone,
+    email,
+    avatar,
+    password,
+  }: ProfilePayload) {
+    await authApi.updateProfile({ username, fullname, phone, email, avatar, password });
+    await mutate();
+  }
+
   return {
     profile,
     firstLoading,
     error,
+    updateProfile,
     login,
     logout,
   };

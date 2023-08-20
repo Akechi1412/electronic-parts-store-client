@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import httpProxy from 'http-proxy';
+import httpProxy, { ProxyResCallback } from 'http-proxy';
 import Cookies from 'cookies';
 
 export const config = {
@@ -21,6 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
 
   // don't send cookies to API server
   req.headers.cookie = '';
+
   proxy.web(req, res, {
     target: process.env.API_URL,
     changeOrigin: true,

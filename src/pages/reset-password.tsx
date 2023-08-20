@@ -18,9 +18,10 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
-  function verifyPassword(password: string) {
+  function verifyPassword() {
+    console.log('a');
     if (password.length === 0) {
       setErrorPasswordText('');
       return;
@@ -44,7 +45,7 @@ export default function AdminLoginPage() {
     setErrorPasswordText('');
   }
 
-  function verifyRePassword(password: string, rePassword: string) {
+  function verifyRePassword() {
     if (rePassword.length === 0) {
       setErrorRePasswordText('');
       return;
@@ -62,13 +63,10 @@ export default function AdminLoginPage() {
 
   function handlePaswordChange(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
-    verifyPasswordDebounce(event.target.value);
-    verifyRePasswordDebounce(event.target.value, rePassword);
   }
 
   function handleRePaswordChange(event: ChangeEvent<HTMLInputElement>) {
     setRePassword(event.target.value);
-    verifyRePasswordDebounce(password, event.target.value);
   }
 
   async function handleSubmitClick() {
@@ -86,25 +84,18 @@ export default function AdminLoginPage() {
       return;
     }
 
+    setLoading(true);
+    setErrorText('');
+    setSuccess(false);
     try {
-      setLoading(true);
       const token = query.token as string;
-      const response = await authApi.resetPassword({ password }, token);
-      const data: any = response;
-      console.log(data);
-      setLoading(false);
-      if (!data?.success) {
-        setSuccess(false);
-        setError(true);
-        return;
-      }
+      await authApi.resetPassword({ password }, token);
       setSuccess(true);
-      setError(false);
-    } catch (error) {
-      setLoading(false);
-      setError(true);
-      setSuccess(false);
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || error.message;
+      setErrorText(errorMessage || 'Đã có lỗi xảy ra. Hãy thử lại.');
     }
+    setLoading(false);
   }
 
   function handleClickEyePass() {
@@ -115,9 +106,15 @@ export default function AdminLoginPage() {
     setShowRePassword((showRePassword) => !showRePassword);
   }
 
-  function handleReturnClick() {
-    router.push('/admin/login');
-  }
+  useEffect(() => {
+    verifyPasswordDebounce();
+    verifyRePasswordDebounce();
+    return () => {
+      verifyPasswordDebounce.cancel();
+      verifyRePasswordDebounce.cancel();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [password, rePassword]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -148,7 +145,7 @@ export default function AdminLoginPage() {
                   <p className="text-success mb-16 text-center max-w-[370px]">
                     Đổi mật khẩu thành công. Vui lòng đăng nhập lại.
                   </p>
-                  <Button onClick={handleReturnClick} className="w-full" title="Đăng nhập" />
+                  <Button href="/" className="w-full" title="Về trang chủ" />
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
@@ -179,9 +176,7 @@ export default function AdminLoginPage() {
                     <p className="pl-2 text-danger text-[12px]">{errorRePasswordText}</p>
                   </div>
                   <Button onClick={handleSubmitClick} className="w-full" title="Xác nhận" />
-                  {error && (
-                    <p className="mt-4 text-[13px] text-danger">Đã có lỗi xảy ra. Hãy thử lại.</p>
-                  )}
+                  {errorText && <p className="mt-4 text-[13px] text-danger">{errorText}</p>}
                 </div>
               )}
             </>
