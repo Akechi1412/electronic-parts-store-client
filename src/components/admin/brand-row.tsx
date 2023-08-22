@@ -21,6 +21,7 @@ export function BrandRow({
           width={80}
           height={80}
           className="object-contain w-20 h-20"
+          priority
         />
       </th>
       <th>{createdAt}</th>

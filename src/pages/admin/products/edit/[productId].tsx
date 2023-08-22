@@ -554,7 +554,7 @@ export default function AdminEditCategoryPage() {
                     <div className="bg-white w-[350px] h-8 rounded border border-ghost relative">
                       <input
                         onChange={handleAmountChange}
-                        value={quantity as number}
+                        value={quantity || ''}
                         className="w-full h-full rounded outline-none px-2"
                         type="number"
                         min={0}
@@ -577,7 +577,7 @@ export default function AdminEditCategoryPage() {
                     <div className="bg-white w-[350px] h-8 rounded border border-ghost relative">
                       <input
                         onChange={handleWarrantyChange}
-                        value={warranty as number}
+                        value={warranty || ''}
                         className="w-full h-full rounded outline-none pl-2 pr-14"
                         type="text"
                       />
@@ -593,7 +593,7 @@ export default function AdminEditCategoryPage() {
                     <div className="bg-white w-[350px] h-8 rounded border border-ghost relative">
                       <input
                         onChange={handlePriceChange}
-                        value={price as number}
+                        value={price || ''}
                         className="w-full h-full rounded outline-none pl-2 pr-14"
                         type="number"
                         min={0}
@@ -608,7 +608,7 @@ export default function AdminEditCategoryPage() {
                     <div className="bg-white w-[350px] rounded border border-ghost relative">
                       <input
                         onChange={handleDiscountChange}
-                        value={discount as number}
+                        value={discount || ''}
                         className="w-full h-8 rounded outline-none pl-2 pr-14"
                         type="number"
                         min={0}

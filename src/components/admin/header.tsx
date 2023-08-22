@@ -45,8 +45,17 @@ export function Header() {
     <header className="fixed top-0 left-0 w-full h-[80px] shadow-lg z-10 bg-white">
       <div className="mx-auto container h-full">
         <div className="flex items-center justify-between h-full">
-          <Link href="/">
-            <Image src="/logo.png" alt="logo" width={60} height={60} className="h-[60px]" />
+          <Link href="/" rel="preload" as="image">
+            <Image
+              src="/logo.svg"
+              alt="logo"
+              width={100}
+              height={100}
+              className="w-[60px] aspect-square"
+              priority
+              placeholder="blur"
+              blurDataURL={'/logo.svg'}
+            />
           </Link>
           <div className="w-[540px] flex border border-ghost rounded-[40px] h-[45px]">
             <input
