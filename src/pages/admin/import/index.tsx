@@ -57,11 +57,10 @@ export default function AdminImportPage() {
           <AdminGroupLayout className="my-6 flex flex-col">
             <h4 className="text-base font-medium capitalize mb-5">Import sản phẩm</h4>
             <ExcelUpload
-              height={192}
-              width={420}
               onFileSelected={handleProductFileSelected}
               onSubmit={handleProductSubmit}
               className="flex flex-col items-center"
+              innerClassName="w-[420px] h-[192px]"
               initialFile={productsFile}
             />
             {productsLoading ? (

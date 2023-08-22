@@ -84,8 +84,7 @@ export interface MultiImagesUploadProps {
 export interface ExcelUploadProps {
   onFileSelected: (file: File) => void;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
-  width: number;
-  height: number;
+  innerClassName?: string;
   className?: string;
   initialFile?: File;
 }

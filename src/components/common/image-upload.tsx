@@ -63,6 +63,7 @@ export function ImageUpload({ onFileSelected, initialImage, width, height }: Ima
             className="w-full h-full object-contain"
             width={350}
             height={176}
+            priority
           />
           <div className="absolute left-0 top-0 w-full h-full opacity-20 bg-[#000]"></div>
           <button

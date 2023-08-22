@@ -126,7 +126,7 @@ export default function AdminProductsPage() {
   }
 
   function handleBrandFilter(textFilter: string) {
-    if (brandFilter.length === 0) return;
+    if (brandList.length === 0) return;
     if (textFilter.length !== 0) {
       const result = brandList.filter((item) => {
         if (item.id === 0) return item.name;

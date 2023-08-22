@@ -79,6 +79,7 @@ export function MultiImagesUpload({
                   width={200}
                   height={200}
                   className="w-full h-full object-contain"
+                  priority
                 />
                 <div
                   onClick={(event: MouseEvent<HTMLDivElement>) => {

@@ -4,8 +4,7 @@ import { ExcelUploadProps } from '@/models';
 
 export function ExcelUpload({
   className,
-  width,
-  height,
+  innerClassName,
   onFileSelected,
   onSubmit,
   initialFile,
@@ -47,7 +46,7 @@ export function ExcelUpload({
         />
         <div
           onClick={handleChooseFileClick}
-          className={`w-[${width}px] h-[${height}px] bg-white border border-dashed border-ghost rounded-lg flex flex-col items-center cursor-pointer p-2`}
+          className={`bg-white border border-dashed border-ghost rounded-lg flex flex-col items-center cursor-pointer p-2 ${innerClassName}`}
         >
           <h5 className="text-base font-semibold">Chọn file</h5>
           <p className="mb-3">Hỗ trợ: excel(.xlsx)</p>
