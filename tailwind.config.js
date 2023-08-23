@@ -16,6 +16,7 @@ module.exports = {
       padding: '60px',
     },
     colors: {
+      transparent: 'transparent',
       shark: {
         DEFAULT: '#1D2023',
         50: 'rgba(29, 32, 35, 50)',

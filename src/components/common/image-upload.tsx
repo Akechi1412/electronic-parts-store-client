@@ -1,18 +1,12 @@
-import { useState, useEffect, createRef } from 'react';
+import { useState, useEffect, useLayoutEffect, createRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { ImageUploadProps } from '@/models';
 
 export function ImageUpload({ onFileSelected, initialImage, width, height }: ImageUploadProps) {
+  const [hovered, setHovered] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (initialImage?.trim()) {
-      setImagePreview(initialImage);
-    } else {
-      setImagePreview(null);
-    }
-  }, [initialImage]);
+  const fileInputRef = createRef<HTMLInputElement>();
 
   const handleFileDrop = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -48,12 +42,20 @@ export function ImageUpload({ onFileSelected, initialImage, width, height }: Ima
     },
   });
 
-  const fileInputRef = createRef<HTMLInputElement>();
+  useEffect(() => {
+    if (initialImage?.trim()) {
+      setImagePreview(initialImage);
+    } else {
+      setImagePreview(null);
+    }
+  }, [initialImage]);
 
   return (
     <div
       {...getRootProps()}
-      className={`w-[${width}px] h-44 h-[${height}px] border-2 border-dashed border-ghost rounded-md flex items-center justify-center cursor-pointer relative overflow-hidden`}
+      className={`w-[${width}px] h-44 h-[${height}px] border-2 border-dashed border-ghost rounded-md flex items-center justify-center relative overflow-hidden`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {imagePreview ? (
         <>
@@ -65,11 +67,17 @@ export function ImageUpload({ onFileSelected, initialImage, width, height }: Ima
             height={176}
             priority
           />
-          <div className="absolute left-0 top-0 w-full h-full opacity-20 bg-[#000]"></div>
+          <div
+            className={`absolute left-0 top-0 w-full h-full opacity-20 transition-all bg-[#000]${
+              hovered ? ' visible' : ' invisible'
+            }`}
+          ></div>
           <button
             type="button"
             onClick={handleButtonClick}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 border border-white rounded text-white cursor-pointer"
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 border border-white rounded text-white cursor-pointer transition-all${
+              hovered ? ' visible' : ' invisible'
+            }`}
           >
             Chọn ảnh
           </button>

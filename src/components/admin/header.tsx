@@ -138,7 +138,6 @@ export function Header() {
                 </ul>
               </div>
             )}
-            S
           </div>
         </div>
       </div>
