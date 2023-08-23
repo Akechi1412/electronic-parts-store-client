@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import { SearchBar } from '../common/search-bar';
 
 export function Header() {
   const router = useRouter();
@@ -45,7 +46,7 @@ export function Header() {
     <header className="fixed top-0 left-0 w-full h-[80px] shadow-lg z-10 bg-white">
       <div className="mx-auto container h-full">
         <div className="flex items-center justify-between h-full">
-          <Link href="/" rel="preload" as="image">
+          <Link href="/" rel="preload">
             <Image
               src="/logo.svg"
               alt="logo"
@@ -57,24 +58,7 @@ export function Header() {
               blurDataURL={'/logo.svg'}
             />
           </Link>
-          <div className="w-[540px] flex border border-ghost rounded-[40px] h-[45px]">
-            <input
-              className="border-none outline-none rounded-[40px] flex-1 px-4"
-              type="text"
-              name="search-info"
-              id="search-info"
-              placeholder="Tìm kiếm thông tin"
-            />
-            <div className="flex justify-center items-center bg-blue-ribbon w-[45px] h-[45px] rounded-full">
-              <Image
-                alt="search"
-                src="/icons/Search-icon.svg"
-                width={23}
-                height={23}
-                className="h-[23px] cursor-pointer"
-              />
-            </div>
-          </div>
+          <SearchBar className="w-[540px]" />
           <div className="flex items-center gap-x-4 relative">
             <Image
               alt="notification"
@@ -154,6 +138,7 @@ export function Header() {
                 </ul>
               </div>
             )}
+            S
           </div>
         </div>
       </div>

@@ -101,3 +101,9 @@ export interface DynamicInputsProps {
   initInputs: InputsData[];
   onInputsChange: (data: InputsData[]) => void;
 }
+
+export interface SearchBarProps {
+  className?: string;
+}
+
+export interface SearchBarSmallProps extends SearchBarProps {}

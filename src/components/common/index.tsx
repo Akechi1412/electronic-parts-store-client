@@ -6,3 +6,5 @@ export * from './image-upload';
 export * from './dynamic_inputs';
 export * from './excel-upload';
 export * from './multi-images-upload';
+export * from './header';
+export * from './search-bar-small';
