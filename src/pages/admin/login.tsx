@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
   }
 
   useEffect(() => {
-    if (profile?.username) {
+    if (profile?.username && profile?.admin) {
       setLoading(true);
       if (profile?.email) {
         router.push('/admin/dashboard');

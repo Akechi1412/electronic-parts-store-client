@@ -13,15 +13,14 @@ export default function AdminLoginPage() {
   const [rePassword, setRePassword] = useState('');
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyRePassword, setEmptyRePassword] = useState(false);
-  const [errorPasswordText, setErrorPasswordText] = useState('' as string);
-  const [errorRePasswordText, setErrorRePasswordText] = useState('' as string);
+  const [errorPasswordText, setErrorPasswordText] = useState('');
+  const [errorRePasswordText, setErrorRePasswordText] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorText, setErrorText] = useState('');
 
   function verifyPassword() {
-    console.log('a');
     if (password.length === 0) {
       setErrorPasswordText('');
       return;
@@ -131,6 +130,7 @@ export default function AdminLoginPage() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rePassword, password]);
+
   return (
     <EmptyLayout className="bg-light-gray w-full h-screen flex justify-center items-center">
       <FormLayout>

@@ -41,10 +41,18 @@ export function CategoriesTree({
             <div
               onClick={() => handleToggle(category.id)}
               style={{ paddingLeft: `${indentLevel * 12}px` }}
-              className="p-1 flex justify-between cursor-pointer hover:bg-malibu-50"
+              className="p-1 flex gap-x-1 justify-between cursor-pointer hover:bg-malibu-50"
             >
               <span>{category.name}</span>
-              {hasChildCategories && <span>{isExpanded(category.id) ? ' [ - ] ' : ' [ + ] '}</span>}
+              {hasChildCategories && (
+                <>
+                  {isExpanded(category.id) ? (
+                    <span className="flex-shrink-0 pr-[2px]">[ - ]</span>
+                  ) : (
+                    <span className="flex-shrink-0">[ + ]</span>
+                  )}
+                </>
+              )}
             </div>
             {isExpanded(category.id) && (
               <CategoriesTree

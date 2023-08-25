@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
 
+export interface RegisterPayload {
+  email: string;
+  password: string;
+}
+
 export interface LoginPayload {
   role: 'admin' | 'user';
   email?: string;

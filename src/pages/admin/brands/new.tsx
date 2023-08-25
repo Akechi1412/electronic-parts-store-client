@@ -57,11 +57,7 @@ export default function AdminNewBrandPage() {
         description: description,
         logo: imageUrl || undefined,
       });
-      setName('');
-      setLogo(' ');
-      setSelectedFile(undefined);
-      setDescription('');
-      nameRef.current?.focus();
+      handleClearClick();
       Swal.fire({
         position: 'center',
         icon: 'success',

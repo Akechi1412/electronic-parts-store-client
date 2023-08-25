@@ -1,5 +1,6 @@
 import { axiosClient } from '@/api-client';
 import {
+  RegisterPayload,
   LoginPayload,
   ProfilePayload,
   forgotPasswordPayload,
@@ -7,6 +8,9 @@ import {
 } from '@/models';
 
 export const authApi = {
+  register(payload: RegisterPayload) {
+    return axiosClient.post('/users/register', payload);
+  },
   login(payload: LoginPayload) {
     return axiosClient.post('/users/login', payload);
   },
@@ -28,5 +32,8 @@ export const authApi = {
         Authorization: `Bearer ${token}`,
       },
     });
+  },
+  verifyEmail(id: string) {
+    return axiosClient.patch(`/users/verify-email/${id}`);
   },
 };

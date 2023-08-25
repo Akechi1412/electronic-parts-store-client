@@ -81,12 +81,7 @@ export default function AdminNewCategoryPage() {
         parent_id: parent.id || null,
         thumbnail: imageUrl || undefined,
       });
-      setNewCategory(true);
-      setName('');
-      setThumbnail('');
-      setSelectedFile(undefined);
-      setParent({ id: 0, name: 'Không có' });
-      nameRef.current?.focus();
+      handleClearClick();
       Swal.fire({
         position: 'center',
         icon: 'success',

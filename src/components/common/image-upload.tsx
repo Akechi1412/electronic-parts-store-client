@@ -63,8 +63,8 @@ export function ImageUpload({ onFileSelected, initialImage, width, height }: Ima
             src={imagePreview}
             alt="Uploaded Preview"
             className="w-full h-full object-contain"
-            width={350}
-            height={176}
+            width={600}
+            height={600}
             priority
           />
           <div

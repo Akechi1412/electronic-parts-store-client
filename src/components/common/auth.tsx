@@ -13,7 +13,7 @@ export function Auth({ children, isAdminPage }: AuthProps) {
     if (isAdminPage && !profile?.admin) {
       isAuthorized = false;
     }
-    if (!firstLoading && !profile?.username && !isAuthorized) {
+    if (!firstLoading && (!profile?.username || !isAuthorized)) {
       if (isAdminPage) {
         router.push('/admin/login');
       } else {

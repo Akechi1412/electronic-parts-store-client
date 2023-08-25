@@ -28,6 +28,7 @@ export function Header() {
 
   async function handleLogoutClick() {
     try {
+      setDropdownExpand(false);
       await logout();
       router.push('/admin/login');
     } catch {
